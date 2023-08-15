@@ -1,4 +1,8 @@
 package com.example.polyfood.services.ipm;
 
-public class OrderServices {
+import com.example.polyfood.services.IOrderServices;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderServices implements IOrderServices {
 }
