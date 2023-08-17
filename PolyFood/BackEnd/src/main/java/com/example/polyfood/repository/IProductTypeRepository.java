@@ -1,7 +1,9 @@
 package com.example.polyfood.repository;
 
-import com.example.polyfood.models.Product;
+import com.example.polyfood.models.ProductType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IProductTypeRepository extends JpaRepository<Product,Integer> {
+@Repository
+public interface IProductTypeRepository extends JpaRepository<ProductType,Integer> {
 }
