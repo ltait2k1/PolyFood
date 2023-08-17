@@ -1,8 +1,11 @@
 package com.example.polyfood.services;
 
 import com.example.polyfood.models.ProductType;
+import com.example.polyfood.models.responobj.Respon;
+import org.springframework.data.domain.Page;
 
 public interface IProductTypeServices {
-    public ProductType addProducType(ProductType productType);
+    public Page<ProductType> getAll(int pageNumber,int pageSize);
+    public Respon<ProductType> addProducType(ProductType productType);
 
 }
