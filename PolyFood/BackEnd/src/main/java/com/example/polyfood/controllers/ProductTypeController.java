@@ -32,4 +32,9 @@ public class ProductTypeController {
         ProductType productType =gson.fromJson(productTypeNew, ProductType.class);
         return productTypeServices.updateProductType(productType);
     }
+
+    @DeleteMapping(value = "productType/deleteProductType")
+    public Respon<ProductType> deleteProductType(@RequestParam int productTypeId){
+        return productTypeServices.deleteProductType(productTypeId);
+    }
 }
