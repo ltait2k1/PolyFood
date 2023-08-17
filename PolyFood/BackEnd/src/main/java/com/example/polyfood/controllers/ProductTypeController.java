@@ -6,9 +6,6 @@ import com.example.polyfood.services.IProductTypeServices;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +23,13 @@ public class ProductTypeController {
     public Respon<ProductType> addProductType(@RequestBody String productTypeNew){
         Gson gson = new Gson();
         ProductType productType =gson.fromJson(productTypeNew, ProductType.class);
-        return productTypeServices.addProducType(productType);
+        return productTypeServices.addProductType(productType);
+    }
+
+    @PutMapping(value = "productType/updateProductType")
+    public Respon<ProductType> updateProductType(@RequestBody String productTypeNew){
+        Gson gson = new Gson();
+        ProductType productType =gson.fromJson(productTypeNew, ProductType.class);
+        return productTypeServices.updateProductType(productType);
     }
 }

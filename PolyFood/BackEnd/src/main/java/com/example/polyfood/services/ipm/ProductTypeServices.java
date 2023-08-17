@@ -19,6 +19,8 @@ public class ProductTypeServices implements IProductTypeServices {
     @Autowired
     private IProductTypeRepository productTypeRepository;
 
+    private static Respon<ProductType> respon = new Respon<>();
+
     @Override
     public Page<ProductType> getAll(int pageNumber,int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
@@ -26,8 +28,7 @@ public class ProductTypeServices implements IProductTypeServices {
     }
 
     @Override
-    public Respon<ProductType> addProducType(ProductType productType) {
-        Respon<ProductType> respon = new Respon<>();
+    public Respon<ProductType> addProductType(ProductType productType) {
         Optional<ProductType> optionalProductType = productTypeRepository.findById(productType.getProductTypeId());
         if (optionalProductType.isEmpty()){
             Date createdTime = new Date();
@@ -41,6 +42,26 @@ public class ProductTypeServices implements IProductTypeServices {
         else {
             respon.setStatus(404);
             respon.setMassage("id da ton tai");
+        }
+        return respon;
+    }
+
+    @Override
+    public Respon<ProductType> updateProductType(ProductType productTypeNew) {
+        Optional<ProductType> optionalProductType = productTypeRepository.findById(productTypeNew.getProductTypeId());
+        if (optionalProductType.isPresent()){
+            ProductType productType = productTypeRepository.getReferenceById(productTypeNew.getProductTypeId());
+            productTypeNew.setCreatedAt(productType.getCreatedAt());
+            Date updateTime = new Date();
+            productTypeNew.setUpdateAt(updateTime);
+            productTypeRepository.save(productTypeNew);
+            respon.setData(productTypeNew);
+            respon.setStatus(200);
+            respon.setMassage("Update thanh cong");
+        }
+        else {
+            respon.setStatus(404);
+            respon.setMassage("id khong ton tai");
         }
         return respon;
     }
