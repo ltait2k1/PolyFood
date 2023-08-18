@@ -1,5 +1,6 @@
 package com.example.polyfood.controllers;
 
+import com.example.polyfood.models.Product;
 import com.example.polyfood.models.ProductType;
 import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.services.IProductTypeServices;
@@ -36,5 +37,10 @@ public class ProductTypeController {
     @DeleteMapping(value = "productType/deleteProductType")
     public Respon<ProductType> deleteProductType(@RequestParam int productTypeId){
         return productTypeServices.deleteProductType(productTypeId);
+    }
+    @GetMapping(value = "producttype/seach/{pageNumber}/{pageSize}")
+    public Page<ProductType> seachProduct(@RequestParam String name, @PathVariable int pageNumber, int pageSize)
+    {
+        return productTypeServices.seachProduct(name,pageNumber,pageSize);
     }
 }

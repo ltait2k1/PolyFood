@@ -118,4 +118,10 @@ public class ProductTypeServices implements IProductTypeServices {
         }
         return respon;
     }
+
+    @Override
+    public Page<ProductType> seachProduct(String name, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        return productTypeRepository.findAllByNameProuctTypeContains(name,pageable);
+    }
 }
