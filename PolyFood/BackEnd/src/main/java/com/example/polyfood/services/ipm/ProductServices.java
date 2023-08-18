@@ -109,6 +109,12 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
+    public Page<Product> seachByPrice(int value1, int value2, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        return productRepository.findAllByPriceBetween(value1,value2,pageable);
+    }
+
+    @Override
     public Page<Product> getAllProduct(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
         return productRepository.findAll(pageable);

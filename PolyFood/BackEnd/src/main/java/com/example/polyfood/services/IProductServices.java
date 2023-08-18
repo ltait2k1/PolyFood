@@ -10,4 +10,5 @@ public interface IProductServices {
     public Respon<Product> updatePrduct(Product product);
     public Respon<Product> delete(int idProduct);
     public Page<Product> seachProduct(String name,int pageNumber, int pageSize);
+    public Page<Product> seachByPrice(int value1, int value2, int pageNumber, int pageSize);
 }

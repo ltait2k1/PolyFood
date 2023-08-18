@@ -43,4 +43,9 @@ public class ProductController {
     {
         return productServices.seachProduct(name,pageNumber,pageSize);
     }
+    @GetMapping(value = "product/seachprice/{pageNumber}/{pageSize}")
+    public Page<Product> seachPriceProduct(@RequestParam int value1, @RequestParam int value2, @PathVariable int pageNumber, @PathVariable int pageSize)
+    {
+        return productServices.seachByPrice(value1,value2,pageNumber,pageSize);
+    }
 }
