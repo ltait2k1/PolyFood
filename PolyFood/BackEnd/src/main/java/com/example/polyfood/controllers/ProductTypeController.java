@@ -14,8 +14,8 @@ public class ProductTypeController {
     @Autowired
     private IProductTypeServices productTypeServices;
 
-    @GetMapping(value = "productType/getAll")
-    public Page<ProductType> getAll(@RequestParam int pageNumber, int pageSize){
+    @GetMapping(value = "productType/getAll/{pageNumber}/{pageSize}")
+    public Page<ProductType> getAll(@PathVariable int pageNumber,@PathVariable int pageSize){
         return productTypeServices.getAll(pageNumber,pageSize);
     }
 

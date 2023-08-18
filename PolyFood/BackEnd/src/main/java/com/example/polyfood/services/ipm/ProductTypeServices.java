@@ -108,9 +108,10 @@ public class ProductTypeServices implements IProductTypeServices {
                             orderDetailRepository.delete(orderDetail);
                         }
                     }
+                    productRepository.delete(product);
                 }
             }
-            ProductType productType = productTypeRepository.findById(productTypeId).get();
+            ProductType productType = productTypeRepository.getReferenceById(productTypeId);
             productTypeRepository.delete(productType);
             respon.setStatus(200);
             respon.setMassage("xoa thanh cong");
