@@ -39,7 +39,7 @@ public class ProductTypeController {
         return productTypeServices.deleteProductType(productTypeId);
     }
     @GetMapping(value = "producttype/seach/{pageNumber}/{pageSize}")
-    public Page<ProductType> seachProduct(@RequestParam String name, @PathVariable int pageNumber, int pageSize)
+    public Page<ProductType> seachProduct(@RequestParam String name, @PathVariable int pageNumber,@PathVariable int pageSize)
     {
         return productTypeServices.seachProduct(name,pageNumber,pageSize);
     }
