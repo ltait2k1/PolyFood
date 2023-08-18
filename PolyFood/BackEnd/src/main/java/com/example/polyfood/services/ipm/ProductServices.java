@@ -59,6 +59,8 @@ public class ProductServices implements IProductServices {
         Respon respon = new Respon();
         Optional<Product> optionalProduct = productRepository.findById(product.getProductId());
         if (!optionalProduct.isEmpty()) {
+            Product product1 = productRepository.getReferenceById(product.getProductId());
+            product.setCreateAt(product1.getCreateAt());
             Date date = new Date();
             product.setUpdateAt(date);
             productRepository.save(product);
