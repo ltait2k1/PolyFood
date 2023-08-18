@@ -9,4 +9,5 @@ public interface IProductServices {
     public Respon<Product> creatProduct(Product product);
     public Respon<Product> updatePrduct(Product product);
     public Respon<Product> delete(int idProduct);
+    public Page<Product> seachProduct(String name,int pageNumber, int pageSize);
 }

@@ -38,4 +38,9 @@ public class ProductController {
     {
         return productServices.delete(idProduct);
     }
+    @GetMapping(value = "product/seach/{pageNumber}/{pageSize}")
+    public Page<Product> seachProduct(@RequestParam String name,@PathVariable int pageNumber,int pageSize)
+    {
+        return productServices.seachProduct(name,pageNumber,pageSize);
+    }
 }
