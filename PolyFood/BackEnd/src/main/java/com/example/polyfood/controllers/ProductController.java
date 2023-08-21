@@ -14,10 +14,10 @@ public class ProductController {
     @Autowired
     ProductServices productServices;
 
-    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
-    public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
+    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{field}")
+    public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable String field)
     {
-        return productServices.getAllProduct(pageNumber,pageSize);
+        return productServices.getAllProduct(pageNumber,pageSize, field);
     }
     @PostMapping(value = "product/create")
     public Respon<Product> createProduct(@RequestBody String product)

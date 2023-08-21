@@ -117,8 +117,8 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public Page<Product> getAllProduct(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+    public Page<Product> getAllProduct(int pageNumber, int pageSize, String field) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,Sort.Direction.ASC, field);
         return productRepository.findAll(pageable);
     }
 }
