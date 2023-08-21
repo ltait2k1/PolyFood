@@ -22,6 +22,13 @@ public class ProductController {
         else
             return productServices.getAllProduct(pageNumber, pageSize, "productName");
     }
+
+    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
+    public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
+    {
+        return productServices.getAllProduct(pageNumber,pageSize,null);
+    }
+
     @PostMapping(value = "product/create")
     public Respon<Product> createProduct(@RequestBody String product)
     {
