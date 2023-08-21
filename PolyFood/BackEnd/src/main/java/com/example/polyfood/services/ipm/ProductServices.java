@@ -119,14 +119,7 @@ public class ProductServices implements IProductServices {
 
     @Override
     public Page<Product> getAllProduct(int pageNumber, int pageSize, String field) {
-        Pageable pageable = null;
-        if (null != field) {
-             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);
-        }
-        else
-        {
-            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "name_product");
-        }
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);
         return productRepository.findAll(pageable);
     }
 }

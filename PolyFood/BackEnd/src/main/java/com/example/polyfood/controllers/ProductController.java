@@ -17,7 +17,10 @@ public class ProductController {
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{field}")
     public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable String field)
     {
-        return productServices.getAllProduct(pageNumber,pageSize, field);
+        if (field != null)
+            return productServices.getAllProduct(pageNumber,pageSize, field);
+        else
+            return productServices.getAllProduct(pageNumber, pageSize, "productName");
     }
     @PostMapping(value = "product/create")
     public Respon<Product> createProduct(@RequestBody String product)
