@@ -26,6 +26,11 @@ public class ProductController {
     {
         return productServices.getAllProduct(pageNumber,pageSize,null, sortType);
     }
+    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
+    {
+        return productServices.getAllProduct(pageNumber,pageSize,null, true);
+    }
 
     @PostMapping(value = "product/create")
     public Respon<Product> createProduct(@RequestBody String product)
