@@ -11,10 +11,7 @@ import com.example.polyfood.repository.IProductRepository;
 import com.example.polyfood.repository.IProductReviewRepository;
 import com.example.polyfood.services.IProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -117,7 +114,7 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public Page<Product> getAllProduct(int pageNumber, int pageSize, String field) {
+    public Slice<Product> getAllProduct(int pageNumber, int pageSize, String field) {
         Pageable pageable = null;
         if (field != null) {
             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);

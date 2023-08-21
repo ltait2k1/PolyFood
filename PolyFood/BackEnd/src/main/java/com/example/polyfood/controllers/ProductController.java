@@ -6,6 +6,7 @@ import com.example.polyfood.services.ipm.ProductServices;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +16,13 @@ public class ProductController {
     ProductServices productServices;
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{field}")
-    public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable String field)
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable String field)
     {
-        if (field != null)
-            return productServices.getAllProduct(pageNumber,pageSize, field);
-        else
-            return productServices.getAllProduct(pageNumber, pageSize, "productName");
+        return productServices.getAllProduct(pageNumber,pageSize, field);
     }
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
-    public Page<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
     {
         return productServices.getAllProduct(pageNumber,pageSize,null);
     }
