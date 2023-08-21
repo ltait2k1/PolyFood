@@ -11,7 +11,11 @@ import com.example.polyfood.repository.IProductRepository;
 import com.example.polyfood.repository.IProductReviewRepository;
 import com.example.polyfood.services.IProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.server.DelegatingServerHttpResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -114,15 +118,16 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public Slice<Product> getAllProduct(int pageNumber, int pageSize, String field) {
-        Pageable pageable = null;
-        if (field != null) {
+    public Page<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
+        Pageable pageable;
+        if (sortType == true && field != null)
             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);
-        }
+        else if(sortType == false && field != null)
+            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.DESC, field);
+        else if(sortType == true && field == null)
+            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "nameProduct");
         else
-        {
-            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "price");
-        }
-        return productRepository.findAll(pageable);
+            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "nameProduct");
+        return  productRepository.findAll(pageable);
     }
 }

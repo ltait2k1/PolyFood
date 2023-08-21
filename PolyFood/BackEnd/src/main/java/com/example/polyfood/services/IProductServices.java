@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 
 public interface IProductServices {
-    public Slice<Product> getAllProduct(int pageNumber, int pageSize, String field);
+    public Slice<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType);
     public Respon<Product> creatProduct(Product product);
     public Respon<Product> updatePrduct(Product product);
     public Respon<Product> delete(int idProduct);
