@@ -5,6 +5,9 @@ import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.repository.IProductReviewRepository;
 import com.example.polyfood.services.IProductReviewServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +19,12 @@ public class ProductReviewServices implements IProductReviewServices {
     private IProductReviewRepository productReviewRepository;
 
     private static Respon<ProductReview> respon = new Respon<>();
+
+    @Override
+    public Page<ProductReview> getAllProductReview(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        return productReviewRepository.findAll(pageable);
+    }
 
     @Override
     public Respon<ProductReview> addProductReview(ProductReview productReviewNew) {
