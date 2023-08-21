@@ -15,16 +15,16 @@ public class ProductController {
     @Autowired
     ProductServices productServices;
 
-    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{field}/{sortType}")
+    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}/{field}")
     public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
     {
         return productServices.getAllProduct(pageNumber,pageSize, field, sortType);
     }
 
-    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
-    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
+    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}")
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize,@PathVariable Boolean sortType)
     {
-        return productServices.getAllProduct(pageNumber,pageSize,null, null);
+        return productServices.getAllProduct(pageNumber,pageSize,null, sortType);
     }
 
     @PostMapping(value = "product/create")
