@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.server.DelegatingServerHttpResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -118,7 +119,14 @@ public class ProductServices implements IProductServices {
 
     @Override
     public Page<Product> getAllProduct(int pageNumber, int pageSize, String field) {
-        Pageable pageable = PageRequest.of(pageNumber,pageSize,Sort.Direction.ASC, field);
+        Pageable pageable = null;
+        if (null != field) {
+             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);
+        }
+        else
+        {
+            pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "name_product");
+        }
         return productRepository.findAll(pageable);
     }
 }
