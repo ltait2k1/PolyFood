@@ -2,17 +2,18 @@ package com.example.polyfood.controllers;
 
 import com.example.polyfood.models.Product;
 import com.example.polyfood.models.responobj.Respon;
-import com.example.polyfood.services.ipm.ProductServices;
+import com.example.polyfood.services.IProductServices;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "api/version1.0")
+@RestController
+@RequestMapping(value = "api/version1.0")
 public class ProductController {
     @Autowired
-    ProductServices productServices;
+    private IProductServices productServices;
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}/{field}")
     public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
