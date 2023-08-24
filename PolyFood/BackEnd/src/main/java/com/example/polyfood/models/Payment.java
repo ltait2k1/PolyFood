@@ -17,6 +17,9 @@ public class Payment {
     @Column(name = "payment_menthod")
     private String paymentMenthod;
 
+    @Column(name = "status")
+    private int status;
+
     @Column(name = "created_at")
     private Date createAt;
 
@@ -26,6 +29,14 @@ public class Payment {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "payment", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Order> orders;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getPaymentId() {
         return paymentId;
