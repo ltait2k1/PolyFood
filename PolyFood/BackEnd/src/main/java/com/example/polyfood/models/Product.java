@@ -31,7 +31,7 @@ public class Product {
     private int discount;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Column(name = "number_of_views")
     private int numberOfViews;
@@ -107,11 +107,11 @@ public class Product {
         this.discount = discount;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

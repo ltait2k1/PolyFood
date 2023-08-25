@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,20 +16,15 @@ public class ProductController {
     private IProductServices productServices;
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}/{field}")
-    public ResponseEntity<Slice<Product>> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
     {
         return productServices.getAllProduct(pageNumber,pageSize, field, sortType);
     }
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}")
-    public ResponseEntity<Slice<Product>> getAll(@PathVariable int pageNumber, @PathVariable int pageSize,@PathVariable Boolean sortType)
+    public Slice<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize,@PathVariable Boolean sortType)
     {
         return productServices.getAllProduct(pageNumber,pageSize,null, sortType);
-    }
-    @GetMapping(value = "product/getall/{pageNumber}/{pageSize}")
-    public ResponseEntity<Slice<Product>> getAll(@PathVariable int pageNumber, @PathVariable int pageSize)
-    {
-        return productServices.getAllProduct(pageNumber,pageSize,null, true);
     }
 
     @PostMapping(value = "product/create")
@@ -54,7 +48,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "product/seach/{pageNumber}/{pageSize}")
-    public ResponseEntity<Page<Product>> seachProduct(@RequestParam String name, @PathVariable int pageNumber, @PathVariable int pageSize)
+    public Page<Product> seachProduct(@RequestParam String name,@PathVariable int pageNumber,@PathVariable int pageSize)
     {
         return productServices.seachProduct(name,pageNumber,pageSize);
     }

@@ -18,7 +18,7 @@ public class Payment {
     private String paymentMenthod;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Column(name = "created_at")
     private Date createAt;
@@ -30,11 +30,11 @@ public class Payment {
     @JsonManagedReference
     private Set<Order> orders;
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

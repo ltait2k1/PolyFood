@@ -23,7 +23,7 @@ public class AccountServices implements IAccountServices {
     @Autowired
     private IDecentralizationRepository decentralizationRepository;
 
-    private Respon<Account> respon = new Respon<>();
+    private static Respon<Account> respon = new Respon<>();
 
     @Override
     public Respon<Account> signUp(String username, String password1, String password2, String email) {
