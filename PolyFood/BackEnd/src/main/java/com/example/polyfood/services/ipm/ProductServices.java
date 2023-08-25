@@ -11,10 +11,10 @@ import com.example.polyfood.repository.IProductRepository;
 import com.example.polyfood.repository.IProductReviewRepository;
 import com.example.polyfood.services.IProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.DelegatingServerHttpResponse;
 import org.springframework.stereotype.Service;
 
@@ -106,9 +106,13 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public Page<Product> seachProduct(String name, int pageNumber, int pageSize) {
+    public ResponseEntity<Page<Product>> seachProduct(String name, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
-        return productRepository.findAllByNameProductContains(name,pageable);
+        HttpHeaders responheader = new HttpHeaders();
+        responheader.add("seachProduct","Tìm thấy");
+        Page page =  productRepository.findAllByNameProductContains(name,pageable);
+
+            return  ResponseEntity.status(HttpStatus.OK).header(String.valueOf(responheader)).body(page);
     }
 
     @Override
@@ -118,8 +122,9 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public Page<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
+    public ResponseEntity<Slice<Product>> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
         Pageable pageable;
+        HttpHeaders headers = new HttpHeaders();
         if (sortType == true && field != null)
             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, field);
         else if(sortType == false && field != null)
@@ -128,6 +133,14 @@ public class ProductServices implements IProductServices {
             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "nameProduct");
         else
             pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "nameProduct");
-        return  productRepository.findAll(pageable);
+        Slice slice = productRepository.findAll(pageable);
+        if (slice.isEmpty() == false) {
+            headers.add("getall","Tìm thấy thành công");
+            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(headers)).body(slice);
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(headers)).body(slice);
+        }
     }
 }
