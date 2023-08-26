@@ -27,6 +27,23 @@ public class OrderDetailServices implements IOrderDetailServices {
 
     private static Respon<OrderDetail> respon = new Respon<>();
 
+    private void updateOrder(int id){
+        Order order = orderRepository.getReferenceById(id);
+        double actualPrice = 0;
+        double originalPrice = 0;
+        for (OrderDetail orderDetail: orderDetailRepository.findAll()){
+            if (orderDetail.getOrder().getOrderId() == id){
+                actualPrice += orderDetail.getProduct().getPrice();
+                originalPrice += orderDetail.getPriceTotal();
+            }
+        }
+        order.setActualPrice(actualPrice);
+        order.setOriginalPrice(originalPrice);
+        Date date = new Date();
+        order.setUpdateAt(date);
+        orderRepository.save(order);
+    }
+
     @Override
     public Respon<OrderDetail> addOrderDetail(OrderDetail orderDetail) {
         Optional<OrderDetail> optional = orderDetailRepository.findById(orderDetail.getOrderDetailId());
@@ -35,7 +52,7 @@ public class OrderDetailServices implements IOrderDetailServices {
             orderDetail.setCreatedAt(date);
             orderDetail.setUpdateAt(date);
             Product product = productRepository.getReferenceById(orderDetail.getProduct().getProductId());
-            double priceTotal = ((product.getPrice() * ((100 - product.getDiscount())/100)) * orderDetail.getQuantity());
+            double priceTotal = (product.getPrice() * ((100 - product.getDiscount())/100)) * orderDetail.getQuantity();
             orderDetail.setPriceTotal(priceTotal);
             orderDetailRepository.save(orderDetail);
             Order order = orderRepository.getReferenceById(orderDetail.getOrder().getOrderId());
@@ -46,11 +63,35 @@ public class OrderDetailServices implements IOrderDetailServices {
             orderRepository.save(order);
             respon.setData(orderDetail);
             respon.setStatus(200);
-            respon.setMassage("them thanh cong");
+            respon.setMassage("them thanh cong " + priceTotal);
         }
         else {
             respon.setMassage("id da ton tai");
         }
         return respon;
     }
+
+    @Override
+    public Respon<OrderDetail> updateOrderDetail(OrderDetail orderDetail) {
+        Optional optional = orderDetailRepository.findById(orderDetail.getOrderDetailId());
+        if (optional.isPresent()){
+            if (orderDetail.getQuantity() < 0){
+                respon.setMassage("so luong ko dc am");
+            }
+            else {
+                if(orderDetail.getQuantity() == 0){
+                    orderDetailRepository.delete(orderDetail);
+                    respon.setMassage("xoa");
+                }
+                else {
+                    orderDetailRepository.save(orderDetail);
+                    respon.setMassage("sua thanh cong");
+                }
+                updateOrder(orderDetail.getOrder().getOrderId());
+            }
+        }
+        return respon;
+    }
+
+
 }
