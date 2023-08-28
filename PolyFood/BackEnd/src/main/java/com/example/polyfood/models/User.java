@@ -41,10 +41,22 @@ public class User {
     @JsonManagedReference
     private Set<Order> orders;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Cart> carts;
+
     @ManyToOne
     @JoinColumn(name = "account_id",nullable = false, referencedColumnName = "account_id")
     @JsonBackReference
     private Account account;
+
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
+    }
 
     public int getUserId() {
         return userId;

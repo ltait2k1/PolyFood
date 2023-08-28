@@ -44,26 +44,45 @@ public class OrderDetailServices implements IOrderDetailServices {
         orderRepository.save(order);
     }
 
+    private void updatePriceTotal(OrderDetail orderDetail){
+        Product product = productRepository.getReferenceById(orderDetail.getProduct().getProductId());
+        double priceTotal = (product.getPrice() * ((100.0 - product.getDiscount())/100)) * orderDetail.getQuantity();
+        orderDetail.setPriceTotal(priceTotal);
+    }
+
     @Override
-    public Respon<OrderDetail> addOrderDetail(OrderDetail orderDetail) {
-        Optional<OrderDetail> optional = orderDetailRepository.findById(orderDetail.getOrderDetailId());
+    public Respon<OrderDetail> addOrderDetail(OrderDetail orderDetailNew) {
+        Optional<OrderDetail> optional = orderDetailRepository.findById(orderDetailNew.getOrderDetailId());
         if (optional.isEmpty()){
+            for (OrderDetail orderDetail: orderDetailRepository.findAll()){
+                if (orderDetail.getOrder().getOrderId() == orderDetailNew.getOrder().getOrderId()){
+                    if (orderDetail.getProduct().getProductId() == orderDetailNew.getProduct().getProductId()){
+                        orderDetail.setQuantity(orderDetail.getQuantity() + orderDetailNew.getQuantity());
+                        updatePriceTotal(orderDetail);
+                        orderDetailRepository.save(orderDetail);
+                        updateOrder(orderDetail.getOrder().getOrderId() );
+                        respon.setData(orderDetail);
+                        respon.setMassage("them thanh cong");
+                        return respon;
+                    }
+                }
+            }
             Date date = new Date();
-            orderDetail.setCreatedAt(date);
-            orderDetail.setUpdateAt(date);
-            Product product = productRepository.getReferenceById(orderDetail.getProduct().getProductId());
-            double priceTotal = (product.getPrice() * ((100 - product.getDiscount())/100)) * orderDetail.getQuantity();
-            orderDetail.setPriceTotal(priceTotal);
-            orderDetailRepository.save(orderDetail);
-            Order order = orderRepository.getReferenceById(orderDetail.getOrder().getOrderId());
+            orderDetailNew.setCreatedAt(date);
+            orderDetailNew.setUpdateAt(date);
+            Product product = productRepository.getReferenceById(orderDetailNew.getProduct().getProductId());
+            double priceTotal = (product.getPrice() * ((100.0 - product.getDiscount())/100)) * orderDetailNew.getQuantity();
+            orderDetailNew.setPriceTotal(priceTotal);
+            orderDetailRepository.save(orderDetailNew);
+            Order order = orderRepository.getReferenceById(orderDetailNew.getOrder().getOrderId());
             order.setUpdateAt(date);
-            double originalPriceTotal = product.getPrice() * orderDetail.getQuantity();
+            double originalPriceTotal = product.getPrice() * orderDetailNew.getQuantity();
             order.setOriginalPrice(order.getOriginalPrice() + originalPriceTotal);
-            order.setActualPrice(order.getOriginalPrice() + priceTotal);
+            order.setActualPrice(order.getActualPrice() + priceTotal);
             orderRepository.save(order);
-            respon.setData(orderDetail);
+            respon.setData(orderDetailNew);
             respon.setStatus(200);
-            respon.setMassage("them thanh cong " + priceTotal);
+            respon.setMassage("them thanh cong ");
         }
         else {
             respon.setMassage("id da ton tai");

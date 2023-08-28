@@ -59,6 +59,18 @@ public class Product {
     @JsonBackReference
     private ProductType productType;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<CartItem> cartItems;
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
     public int getProductId() {
         return productId;
     }
