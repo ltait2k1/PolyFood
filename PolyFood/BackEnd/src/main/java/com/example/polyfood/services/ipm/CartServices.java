@@ -134,4 +134,21 @@ public class CartServices implements ICartServices {
         }
         return respon;
     }
+
+    @Override
+    public Respon<CartItem> delete(int idCartItem) {
+        Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
+        if (optional.isPresent()){
+            CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
+            cartItemRepository.delete(cartItem);
+            respon.setData(cartItem);
+            respon.setStatus(200);
+            respon.setMassage("xoa thanh cong");
+        }
+        else{
+            respon.setStatus(404);
+            respon.setMassage("mat hang khong ton tai");
+        }
+        return null;
+    }
 }

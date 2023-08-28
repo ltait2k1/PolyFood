@@ -7,5 +7,5 @@ public interface ICartServices {
     public Respon<CartItem> addCartItem(int idUser,int idProduct, Integer quantity);
     public Respon<CartItem> updateCartItem(int idUser,int idProduct, Integer quantity);
     public Respon<CartItem> updateCartItem2(int idCartItem, Integer quantity);
-
+    public Respon<CartItem> delete(int idCartItem);
 }
