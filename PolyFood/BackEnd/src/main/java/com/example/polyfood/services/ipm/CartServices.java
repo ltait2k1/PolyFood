@@ -11,6 +11,7 @@ import com.example.polyfood.services.ICartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -136,7 +137,7 @@ public class CartServices implements ICartServices {
     }
 
     @Override
-    public Respon<CartItem> delete(int idCartItem) {
+    public Respon<CartItem> deleteCartItem(int idCartItem) {
         Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
         if (optional.isPresent()){
             CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
@@ -149,6 +150,27 @@ public class CartServices implements ICartServices {
             respon.setStatus(404);
             respon.setMassage("mat hang khong ton tai");
         }
-        return null;
+        return respon;
+    }
+
+    @Override
+    public Respon<Cart> deleteAll(int idCart) {
+        Optional<Cart> optional = cartRepository.findById(idCart);
+        if (optional.isPresent()){
+            for (CartItem cartItem: cartItemRepository.findAll()){
+                if (cartItem.getCart().getCartId() == idCart){
+                    cartItemRepository.delete(cartItem);
+                }
+            }
+            Cart cart = cartRepository.getReferenceById(idCart);
+            respon.setData(cart);
+            respon.setStatus(200);
+            respon.setMassage("Xoa thanh cong");
+        }
+        else {
+            respon.setStatus(404);
+            respon.setMassage("id khong ton tai");
+        }
+        return respon;
     }
 }

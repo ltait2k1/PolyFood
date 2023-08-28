@@ -1,5 +1,6 @@
 package com.example.polyfood.controllers;
 
+import com.example.polyfood.models.Cart;
 import com.example.polyfood.models.CartItem;
 import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.services.ICartServices;
@@ -30,5 +31,15 @@ public class CartController {
     @PutMapping(value = "cart/updateCartItem/{idCartItem}/{quantity}")
     public Respon<CartItem> updateCartItem(@PathVariable int idCartItem, @PathVariable Integer quantity){
         return cartServices.updateCartItem2(idCartItem, quantity);
+    }
+
+    @DeleteMapping(value = "cart/deleteCartItem/{idCartItem}")
+    public Respon<CartItem> deleteCartItem(@PathVariable int idCartItem){
+        return cartServices.deleteCartItem(idCartItem);
+    }
+
+    @DeleteMapping(value = "cart/deleteAll/{idCart}")
+    public Respon<Cart> deleteAll(@PathVariable int idCart){
+        return cartServices.deleteAll(idCart);
     }
 }
