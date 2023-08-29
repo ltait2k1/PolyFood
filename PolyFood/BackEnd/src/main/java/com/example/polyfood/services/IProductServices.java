@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface IProductServices {
-    public ResponseEntity<Slice<Product>> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType);
+    public List<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType);
     public Respon<Product> creatProduct(Product product);
     public Respon<Product> updatePrduct(Product product);
     public Respon<Product> delete(int idProduct);

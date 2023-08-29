@@ -10,6 +10,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("http://localhost:8080")
 @RestController
 @RequestMapping(value = "api/version1.0")
 public class ProductController {
@@ -17,13 +20,13 @@ public class ProductController {
     private IProductServices productServices;
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}/{field}")
-    public ResponseEntity<Slice<Product>> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
+    public List<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable() String field, @PathVariable Boolean sortType)
     {
         return productServices.getAllProduct(pageNumber,pageSize, field, sortType);
     }
 
     @GetMapping(value = "product/getall/{pageNumber}/{pageSize}/{sortType}")
-    public ResponseEntity<Slice<Product>> getAll(@PathVariable int pageNumber, @PathVariable int pageSize,@PathVariable Boolean sortType)
+    public List<Product> getAll(@PathVariable int pageNumber, @PathVariable int pageSize,@PathVariable Boolean sortType)
     {
         return productServices.getAllProduct(pageNumber,pageSize,null, sortType);
     }

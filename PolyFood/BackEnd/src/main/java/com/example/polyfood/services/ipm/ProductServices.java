@@ -122,7 +122,7 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
-    public ResponseEntity<Slice<Product>> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
+    public List<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
         Pageable pageable;
         HttpHeaders headers = new HttpHeaders();
         if (sortType == true && field != null)
@@ -136,11 +136,11 @@ public class ProductServices implements IProductServices {
         Slice slice = productRepository.findAll(pageable);
         if (slice.isEmpty() == false) {
             headers.add("getall","Tìm thấy thành công");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(headers)).body(slice);
+            return productRepository.findAll(pageable).getContent();
         }
         else
         {
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(headers)).body(slice);
+            return productRepository.findAll(pageable).getContent();
         }
     }
 }
