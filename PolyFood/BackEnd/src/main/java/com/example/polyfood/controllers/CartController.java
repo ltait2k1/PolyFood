@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "api/version1.0")
@@ -46,7 +47,7 @@ public class CartController {
     }
 
     @GetMapping(value = "cart/getAll/{idUser}")
-    public List<CartItem> getAllCartItem(@PathVariable int idUser){
+    public Set<CartItem> getAllCartItem(@PathVariable int idUser){
         return cartServices.getAll(idUser);
     }
 }

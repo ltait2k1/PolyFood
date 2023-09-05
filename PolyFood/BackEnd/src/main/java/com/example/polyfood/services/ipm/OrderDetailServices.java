@@ -27,13 +27,13 @@ public class OrderDetailServices implements IOrderDetailServices {
 
     private static Respon<OrderDetail> respon = new Respon<>();
 
-    private void updateOrder(int id){
-        Order order = orderRepository.getReferenceById(id);
+    private void updateOrder(int idUser){
+        Order order = orderRepository.getReferenceById(idUser);
         double actualPrice = 0;
         double originalPrice = 0;
         for (OrderDetail orderDetail: orderDetailRepository.findAll()){
-            if (orderDetail.getOrder().getOrderId() == id){
-                actualPrice += orderDetail.getProduct().getPrice();
+            if (orderDetail.getOrder().getOrderId() == idUser){
+                actualPrice += (orderDetail.getProduct().getPrice() * orderDetail.getQuantity());
                 originalPrice += orderDetail.getPriceTotal();
             }
         }

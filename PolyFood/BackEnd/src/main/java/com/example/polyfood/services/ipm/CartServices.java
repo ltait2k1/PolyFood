@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CartServices implements ICartServices {
@@ -176,7 +177,7 @@ public class CartServices implements ICartServices {
     }
 
     @Override
-    public List<CartItem> getAll(int idUser) {
+    public Set<CartItem> getAll(int idUser) {
         Cart cart = new Cart();
         for (Cart temp: cartRepository.findAll()){
             if (temp.getUser().getUserId() == idUser){
@@ -184,7 +185,7 @@ public class CartServices implements ICartServices {
                 break;
             }
         }
-        List<CartItem> cartItems = cart.getCartItems().stream().toList();
+        Set<CartItem> cartItems = cart.getCartItems();
 //        for (CartItem n: cartItems){
 //            System.out.println(n.getCart().getCartId());
 //            System.out.println(n.getProduct().getProductId());
