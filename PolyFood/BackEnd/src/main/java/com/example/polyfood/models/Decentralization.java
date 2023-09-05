@@ -25,7 +25,7 @@ public class Decentralization {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "decentralization", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Account> accounts;
+    private Set<User> users;
 
     public int getDecentralizationId() {
         return decentralizationId;
@@ -59,11 +59,11 @@ public class Decentralization {
         this.updateAt = updateAt;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

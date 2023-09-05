@@ -27,6 +27,21 @@ public class User {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "status")
+    private int status;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
+    @Column(name = "reset_password_token_expiry")
+    private Date resetPasswordTokenExpiry;
+
     @Column(name = "created_at")
     private Date createAt;
 
@@ -46,9 +61,9 @@ public class User {
     private Set<Cart> carts;
 
     @ManyToOne
-    @JoinColumn(name = "account_id",nullable = false, referencedColumnName = "account_id")
+    @JoinColumn(name = "decentralization_id",nullable = false, referencedColumnName = "decentralization_id")
     @JsonBackReference
-    private Account account;
+    private Decentralization decentralization;
 
     public Set<Cart> getCarts() {
         return carts;
@@ -68,6 +83,54 @@ public class User {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public Date getResetPasswordTokenExpiry() {
+        return resetPasswordTokenExpiry;
+    }
+
+    public void setResetPasswordTokenExpiry(Date resetPasswordTokenExpiry) {
+        this.resetPasswordTokenExpiry = resetPasswordTokenExpiry;
+    }
+
+    public Decentralization getDecentralization() {
+        return decentralization;
+    }
+
+    public void setDecentralization(Decentralization decentralization) {
+        this.decentralization = decentralization;
     }
 
     public void setUserName(String userName) {
@@ -130,11 +193,5 @@ public class User {
         this.orders = orders;
     }
 
-    public Account getAccount() {
-        return account;
-    }
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }
