@@ -11,6 +11,7 @@ import com.example.polyfood.services.ICartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -172,5 +173,29 @@ public class CartServices implements ICartServices {
             respon.setMassage("id khong ton tai");
         }
         return respon;
+    }
+
+    @Override
+    public List<CartItem> getAll(int idUser) {
+        Cart cart = new Cart();
+        for (Cart temp: cartRepository.findAll()){
+            if (temp.getUser().getUserId() == idUser){
+                cart = temp;
+                break;
+            }
+        }
+        List<CartItem> cartItems = cart.getCartItems().stream().toList();
+//        for (CartItem n: cartItems){
+//            System.out.println(n.getCart().getCartId());
+//            System.out.println(n.getProduct().getProductId());
+//        }
+
+//        List<CartItem> cartItems = new ArrayList<>();
+//        for (CartItem cartItem: cartItemRepository.findAll()){
+//            if (cartItem.getCart() == cart){
+//                cartItems.add(cartItem);
+//            }
+//        }
+        return cartItems;
     }
 }

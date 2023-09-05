@@ -7,6 +7,8 @@ import com.example.polyfood.services.ICartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/version1.0")
 public class CartController {
@@ -41,5 +43,10 @@ public class CartController {
     @DeleteMapping(value = "cart/deleteAll/{idCart}")
     public Respon<Cart> deleteAll(@PathVariable int idCart){
         return cartServices.deleteAll(idCart);
+    }
+
+    @GetMapping(value = "cart/getAll/{idUser}")
+    public List<CartItem> getAllCartItem(@PathVariable int idUser){
+        return cartServices.getAll(idUser);
     }
 }
