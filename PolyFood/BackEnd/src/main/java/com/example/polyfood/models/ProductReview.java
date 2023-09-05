@@ -18,13 +18,13 @@ public class ProductReview {
     private String contentRated;
 
     @Column(name = "point_evaluation")
-    private int pointEvaluation;
+    private Integer pointEvaluation;
 
     @Column(name = "content_seen")
     private String contentSeen;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -58,14 +58,6 @@ public class ProductReview {
         this.contentRated = contentRated;
     }
 
-    public int getPointEvaluation() {
-        return pointEvaluation;
-    }
-
-    public void setPointEvaluation(int pointEvaluation) {
-        this.pointEvaluation = pointEvaluation;
-    }
-
     public String getContentSeen() {
         return contentSeen;
     }
@@ -74,11 +66,19 @@ public class ProductReview {
         this.contentSeen = contentSeen;
     }
 
-    public int getStatus() {
+    public Integer getPointEvaluation() {
+        return pointEvaluation;
+    }
+
+    public void setPointEvaluation(Integer pointEvaluation) {
+        this.pointEvaluation = pointEvaluation;
+    }
+
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

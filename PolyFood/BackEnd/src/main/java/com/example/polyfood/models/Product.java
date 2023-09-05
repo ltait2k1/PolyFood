@@ -28,13 +28,13 @@ public class Product {
     private String title;
 
     @Column(name = "discount")
-    private int discount;
+    private Integer discount;
 
     @Column(name = "status")
     private Integer status;
 
     @Column(name = "number_of_views")
-    private int numberOfViews;
+    private Integer numberOfViews;
 
     @Column(name = "created_at")
     private Date createAt;
@@ -111,11 +111,11 @@ public class Product {
         this.title = title;
     }
 
-    public int getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
@@ -127,11 +127,11 @@ public class Product {
         this.status = status;
     }
 
-    public int getNumberOfViews() {
+    public Integer getNumberOfViews() {
         return numberOfViews;
     }
 
-    public void setNumberOfViews(int numberOfViews) {
+    public void setNumberOfViews(Integer numberOfViews) {
         this.numberOfViews = numberOfViews;
     }
 
