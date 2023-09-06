@@ -46,4 +46,9 @@ public class CartController {
     public List<CartTemp> getAllCartItem(@PathVariable int idCart){
         return cartServices.getAll(idCart);
     }
+
+    @GetMapping(value = "cart/view/{idCart}")
+    public List<CartItem> view(@PathVariable int idCart){
+        return cartServices.view(idCart);
+    }
 }

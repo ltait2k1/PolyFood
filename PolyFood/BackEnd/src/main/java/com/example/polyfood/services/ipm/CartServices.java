@@ -146,4 +146,20 @@ public class CartServices implements ICartServices {
 
         return cartTemps;
     }
+
+    @Override
+    public List<CartItem> view(int idCart) {
+        List<CartItem> cartItemList = new ArrayList<>();
+        for (CartItem item: cartItemRepository.findAll()){
+            if (item.getCart().getCartId() == idCart){
+                CartItem cartItem = new CartItem();
+                cartItem.setCartItemId(item.getCartItemId());
+                cartItem.setQuantity(item.getQuantity());
+                cartItem.setProduct(item.getProduct());
+                cartItem.setCart(item.getCart());
+                cartItemList.add(cartItem);
+            }
+        }
+        return cartItemList;
+    }
 }

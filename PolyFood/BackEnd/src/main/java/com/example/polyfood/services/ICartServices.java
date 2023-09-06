@@ -13,5 +13,6 @@ public interface ICartServices {
     public List<CartTemp> updateCartItem(int idCartItem, Integer quantity);
     public List<CartTemp> deleteCartItem(int idCartItem);
     public List<CartTemp> deleteAll(int idCart);
-    public List<CartTemp> getAll(int IdCart);
+    public List<CartTemp> getAll(int idCart);
+    public List<CartItem> view(int idCart);
 }
