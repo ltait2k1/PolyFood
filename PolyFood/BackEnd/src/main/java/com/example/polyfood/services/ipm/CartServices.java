@@ -3,6 +3,7 @@ package com.example.polyfood.services.ipm;
 import com.example.polyfood.models.Cart;
 import com.example.polyfood.models.CartItem;
 import com.example.polyfood.models.Product;
+import com.example.polyfood.models.responobj.CartTemp;
 import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.repository.ICartItemRepository;
 import com.example.polyfood.repository.ICartRepository;
@@ -11,10 +12,7 @@ import com.example.polyfood.services.ICartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CartServices implements ICartServices {
@@ -177,26 +175,28 @@ public class CartServices implements ICartServices {
     }
 
     @Override
-    public Set<CartItem> getAll(int idUser) {
-        Cart cart = new Cart();
-        for (Cart temp: cartRepository.findAll()){
-            if (temp.getUser().getUserId() == idUser){
-                cart = temp;
-                break;
-            }
-        }
-        Set<CartItem> cartItems = cart.getCartItems();
+    public List<CartTemp> getAll(int idCart) {
+
+//        Set<CartItem> cartItems = cart.getCartItems();
 //        for (CartItem n: cartItems){
 //            System.out.println(n.getCart().getCartId());
 //            System.out.println(n.getProduct().getProductId());
 //        }
+        Cart cart = cartRepository.getReferenceById(idCart);
+        List<CartTemp> cartTemps = new ArrayList<>();
+        for (CartItem item: cart.getCartItems()){
+            CartTemp cartTemp = new CartTemp();
+            cartTemp.setCartItemId(item.getCartItemId());
+            cartTemp.setQuantity(item.getQuantity());
+            cartTemp.setProductId(item.getProduct().getProductId());
+            cartTemp.setAvatarImageProduct(item.getProduct().getAvatarImageProduct());
+            cartTemp.setPrice(item.getProduct().getPrice());
+            double OriginalPrice = cartTemp.getPrice() * ((100.0 - item.getProduct().getDiscount())/100);
+            cartTemp.setOriginalPrice(OriginalPrice);
+            cartTemp.setSubtotal(cartTemp.getOriginalPrice() * cartTemp.getQuantity());
+            cartTemps.add(cartTemp);
+        }
 
-//        List<CartItem> cartItems = new ArrayList<>();
-//        for (CartItem cartItem: cartItemRepository.findAll()){
-//            if (cartItem.getCart() == cart){
-//                cartItems.add(cartItem);
-//            }
-//        }
-        return cartItems;
+        return cartTemps;
     }
 }

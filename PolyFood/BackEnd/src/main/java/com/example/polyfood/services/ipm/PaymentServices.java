@@ -13,11 +13,5 @@ import java.util.List;
 
 @Service
 public class PaymentServices implements IPaymentServices {
-    @Autowired
-    IPaymentRepository paymentRepository;
-    @Override
-    public Page<Payment> getAllPayment(int pageSize, int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber,pageSize);
-        return paymentRepository.findAll(pageable);
-    }
+
 }

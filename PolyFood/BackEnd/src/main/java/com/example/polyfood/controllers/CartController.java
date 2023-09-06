@@ -2,6 +2,7 @@ package com.example.polyfood.controllers;
 
 import com.example.polyfood.models.Cart;
 import com.example.polyfood.models.CartItem;
+import com.example.polyfood.models.responobj.CartTemp;
 import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.services.ICartServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class CartController {
         return cartServices.deleteAll(idCart);
     }
 
-    @GetMapping(value = "cart/getAll/{idUser}")
-    public Set<CartItem> getAllCartItem(@PathVariable int idUser){
-        return cartServices.getAll(idUser);
+    @GetMapping(value = "cart/getAll/{idCart}")
+    public List<CartTemp> getAllCartItem(@PathVariable int idCart){
+        return cartServices.getAll(idCart);
     }
 }
