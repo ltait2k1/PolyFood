@@ -59,7 +59,7 @@ public class Product {
     @JsonBackReference
     private ProductType productType;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<CartItem> cartItems;
 

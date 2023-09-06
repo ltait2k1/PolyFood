@@ -101,24 +101,19 @@ public class CartServices implements ICartServices {
     }
 
     @Override
-    public Respon<CartItem> deleteCartItem(int idCartItem) {
+    public List<CartTemp> deleteCartItem(int idCartItem) {
         Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
         if (optional.isPresent()){
             CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
             cartItemRepository.delete(cartItem);
-            respon.setData(cartItem);
-            respon.setStatus(200);
-            respon.setMassage("xoa thanh cong");
+            cartTemps.clear();
+            getAll(cartItem.getCart().getCartId());
         }
-        else{
-            respon.setStatus(404);
-            respon.setMassage("mat hang khong ton tai");
-        }
-        return respon;
+        return cartTemps;
     }
 
     @Override
-    public Respon<Cart> deleteAll(int idCart) {
+    public List<CartTemp> deleteAll(int idCart) {
         Optional<Cart> optional = cartRepository.findById(idCart);
         if (optional.isPresent()){
             for (CartItem cartItem: cartItemRepository.findAll()){
@@ -126,38 +121,27 @@ public class CartServices implements ICartServices {
                     cartItemRepository.delete(cartItem);
                 }
             }
-            Cart cart = cartRepository.getReferenceById(idCart);
-            respon.setData(cart);
-            respon.setStatus(200);
-            respon.setMassage("Xoa thanh cong");
+            cartTemps.clear();
         }
-        else {
-            respon.setStatus(404);
-            respon.setMassage("id khong ton tai");
-        }
-        return respon;
+        return cartTemps;
     }
 
     @Override
     public List<CartTemp> getAll(int idCart) {
-
-//        Set<CartItem> cartItems = cart.getCartItems();
-//        for (CartItem n: cartItems){
-//            System.out.println(n.getCart().getCartId());
-//            System.out.println(n.getProduct().getProductId());
-//        }
-        Cart cart = cartRepository.getReferenceById(idCart);
-        for (CartItem item: cart.getCartItems()){
-            CartTemp cartTemp = new CartTemp();
-            cartTemp.setCartItemId(item.getCartItemId());
-            cartTemp.setQuantity(item.getQuantity());
-            cartTemp.setProductId(item.getProduct().getProductId());
-            cartTemp.setAvatarImageProduct(item.getProduct().getAvatarImageProduct());
-            cartTemp.setPrice(item.getProduct().getPrice());
-            double OriginalPrice = cartTemp.getPrice() * ((100.0 - item.getProduct().getDiscount())/100);
-            cartTemp.setOriginalPrice(OriginalPrice);
-            cartTemp.setSubtotal(cartTemp.getOriginalPrice() * cartTemp.getQuantity());
-            cartTemps.add(cartTemp);
+        for (CartItem item: cartItemRepository.findAll()){
+            if (item.getCart().getCartId() == idCart){
+                CartTemp cartTemp = new CartTemp();
+                cartTemp.setCartItemId(item.getCartItemId());
+                cartTemp.setQuantity(item.getQuantity());
+                cartTemp.setProductId(item.getProduct().getProductId());
+                cartTemp.setNameProduct(item.getProduct().getNameProduct());
+                cartTemp.setAvatarImageProduct(item.getProduct().getAvatarImageProduct());
+                cartTemp.setPrice(item.getProduct().getPrice());
+                double OriginalPrice = cartTemp.getPrice() * ((100.0 - item.getProduct().getDiscount())/100);
+                cartTemp.setOriginalPrice(OriginalPrice);
+                cartTemp.setSubtotal(cartTemp.getOriginalPrice() * cartTemp.getQuantity());
+                cartTemps.add(cartTemp);
+            }
         }
 
         return cartTemps;

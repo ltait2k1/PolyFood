@@ -33,12 +33,12 @@ public class CartController {
     }
 
     @DeleteMapping(value = "cart/deleteCartItem/{idCartItem}")
-    public Respon<CartItem> deleteCartItem(@PathVariable int idCartItem){
+    public List<CartTemp> deleteCartItem(@PathVariable int idCartItem){
         return cartServices.deleteCartItem(idCartItem);
     }
 
     @DeleteMapping(value = "cart/deleteAll/{idCart}")
-    public Respon<Cart> deleteAll(@PathVariable int idCart){
+    public List<CartTemp> deleteAll(@PathVariable int idCart){
         return cartServices.deleteAll(idCart);
     }
 
