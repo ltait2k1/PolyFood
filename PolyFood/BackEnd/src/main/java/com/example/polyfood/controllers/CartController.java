@@ -27,14 +27,9 @@ public class CartController {
         return cartServices.addCartItem(idUser,idProduct,null);
     }
 
-//    @PutMapping(value = "cart/updateCartItem/{idUser}/{idProduct}/{quantity}")
-//    public Respon<CartItem> updateCartItem(@PathVariable int idUser, @PathVariable int idProduct, @PathVariable Integer quantity){
-//        return cartServices.updateCartItem(idUser,idProduct,quantity);
-//    }
-
     @PutMapping(value = "cart/updateCartItem/{idCartItem}/{quantity}")
-    public Respon<CartItem> updateCartItem(@PathVariable int idCartItem, @PathVariable Integer quantity){
-        return cartServices.updateCartItem2(idCartItem, quantity);
+    public List<CartTemp> updateCartItem(@PathVariable int idCartItem, @PathVariable Integer quantity){
+        return cartServices.updateCartItem(idCartItem, quantity);
     }
 
     @DeleteMapping(value = "cart/deleteCartItem/{idCartItem}")
