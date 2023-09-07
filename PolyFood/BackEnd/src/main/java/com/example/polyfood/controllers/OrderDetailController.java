@@ -5,10 +5,9 @@ import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.services.IOrderDetailServices;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+@CrossOrigin(originPatterns = "http://localhost:8080")
 
 @RestController
 @RequestMapping(value = "api/version1.0")

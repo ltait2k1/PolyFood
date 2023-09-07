@@ -3,6 +3,7 @@ package com.example.polyfood.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.Set;
@@ -25,6 +26,7 @@ public class Product {
     private String avatarImageProduct;
 
     @Column(name = "title")
+    @Size(max = 500)
     private String title;
 
     @Column(name = "discount")

@@ -6,6 +6,7 @@ import com.example.polyfood.services.IProductImageServices;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(originPatterns = "http://localhost:8080")
 
 @RestController
 @RequestMapping(value = "api/version1.0")

@@ -4,6 +4,7 @@ import com.example.polyfood.config.Config;
 import com.example.polyfood.models.responobj.Respon;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+@CrossOrigin(originPatterns = "http://localhost:8080")
 
 @RestController
 @RequestMapping(value = "api/version1.0")
