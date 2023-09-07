@@ -3,6 +3,7 @@ package com.example.polyfood.services.ipm;
 import com.example.polyfood.models.*;
 import com.example.polyfood.models.responobj.Respon;
 import com.example.polyfood.repository.*;
+import com.example.polyfood.services.ICartServices;
 import com.example.polyfood.services.IOrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class OrderServices implements IOrderServices {
     private ICartRepository cartRepository;
 
     @Autowired
+    private ICartItemRepository cartItemRepository;
+
+    @Autowired
     private IOrderStatusRepository orderStatusRepository;
 
     @Autowired
@@ -28,6 +32,7 @@ public class OrderServices implements IOrderServices {
 
     @Autowired
     private IOrderDetailRepository orderDetailRepository;
+
 
     private static Respon<Order> respon = new Respon<>();
 
@@ -53,8 +58,16 @@ public class OrderServices implements IOrderServices {
         orderRepository.save(order);
     }
 
+    private void deleteCart(int idCart){
+        for (CartItem cartItem: cartItemRepository.findAll()){
+            if (cartItem.getCart().getCartId() == idCart){
+                cartItemRepository.delete(cartItem);
+            }
+        }
+    }
+
     @Override
-    public Respon<Order> addOrder(int idCart) {
+    public Respon<Order> addOrder(int idCart, String fullName, String email, String phone, String address, String note) {
         Cart cart = cartRepository.getReferenceById(idCart);
         OrderStatus orderStatus = orderStatusRepository.getReferenceById(1);
         Payment payment = paymentRepository.getReferenceById(1);
@@ -65,6 +78,11 @@ public class OrderServices implements IOrderServices {
         orderNew.setOrderStatus(orderStatus);
         orderNew.setPayment(payment);
         orderNew.setUser(cart.getUser());
+        orderNew.setFullName(fullName);
+        orderNew.setEmail(email);
+        orderNew.setPhone(phone);
+        orderNew.setAddress(address);
+        orderNew.setNote(note);
         orderRepository.save(orderNew);
 
         Set<CartItem> cartItems = cart.getCartItems();
@@ -80,6 +98,7 @@ public class OrderServices implements IOrderServices {
             orderDetailRepository.save(orderDetail);
         }
         updateOrder(orderNew.getOrderId());
+        deleteCart(idCart);
         respon.setData(orderNew);
         respon.setStatus(200);
         respon.setMassage("ok");
@@ -87,9 +106,15 @@ public class OrderServices implements IOrderServices {
     }
 
     @Override
-    public Set<OrderDetail> getAll(int idOrder) {
-        Order order = orderRepository.getReferenceById(idOrder);
-        Set<OrderDetail> orderDetails = order.getOrderDetails();
-        return orderDetails;
+    public Order viewOrder(int idOrder) {
+        Optional<Order> optional = orderRepository.findById(idOrder);
+        if (optional.isPresent()){
+            Order order = orderRepository.getReferenceById(idOrder);
+//            for (OrderDetail orderDetail: order.getOrderDetails()){
+//                System.out.println(orderDetail.getProduct().getProductId());
+//            }
+            return order;
+        }
+        return null;
     }
 }

@@ -39,6 +39,9 @@ public class Order {
     @Column(name = "update_at")
     private Date updateAt;
 
+    @Column(name = "note")
+    private String note;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<OrderDetail> orderDetails;
@@ -160,5 +163,13 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

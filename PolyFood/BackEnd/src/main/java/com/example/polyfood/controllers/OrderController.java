@@ -16,13 +16,19 @@ public class OrderController {
     @Autowired
     private IOrderServices orderServices;
 
-    @PostMapping(value = "order/addOrder/{idOrder}")
-    public Respon<Order> addOrder(@PathVariable int idOrder){
-        return orderServices.addOrder(idOrder);
+    @PostMapping(value = "order/addOrder/{idOrder}/{fullName}/{email}/{phone}/{address}/{note}")
+    public Respon<Order> addOrder(
+            @PathVariable int idOrder,
+            @PathVariable String fullName,
+            @PathVariable String email,
+            @PathVariable String phone,
+            @PathVariable String address,
+            @PathVariable String note){
+        return orderServices.addOrder(idOrder,fullName,email,phone,address,note);
     }
 
-    @GetMapping(value = "order/getAll/{idOrder}")
-    public Set<OrderDetail> getAll(@PathVariable int idOrder){
-        return orderServices.getAll(idOrder);
+    @GetMapping(value = "order/viewOrder/{idOrder}")
+    public Order viewOrder(@PathVariable int idOrder){
+        return orderServices.viewOrder(idOrder);
     }
 }
