@@ -23,7 +23,7 @@ public class Cart {
     @JsonBackReference
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cart", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<CartItem> cartItems;
 

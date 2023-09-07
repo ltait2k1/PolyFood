@@ -30,18 +30,12 @@ public class CartServices implements ICartServices {
     private static List<CartTemp> cartTemps = new ArrayList<>();
 
     @Override
-    public Respon<CartItem> addCartItem(int idUser, int idProduct, Integer quantity) {
-        Cart cart = new Cart();
-        for (Cart temp: cartRepository.findAll()){
-            if (temp.getUser().getUserId() == idUser){
-                cart = temp;
-                break;
-            }
-        }
-
+    public Respon<CartItem> addCartItem(int idCart, int idProduct, Integer quantity) {
+        Cart cart = cartRepository.getReferenceById(idCart);
         if (quantity == null){
-            for (CartItem item: cartItemRepository.findAll()){
-                if (item.getCart() == cart && item.getProduct().getProductId() == idProduct){
+            for (CartItem item: cart.getCartItems()){
+                if (item.getProduct().getProductId() == idProduct){
+                    System.out.println(1);
                     item.setQuantity(item.getQuantity() + 1);
                     cartItemRepository.save(item);
                     respon.setData(item);
@@ -60,9 +54,10 @@ public class CartServices implements ICartServices {
             respon.setMassage("them thanh cong");
         }
         else {
-            for (CartItem item: cartItemRepository.findAll()){
-                if (item.getCart() == cart && item.getProduct().getProductId() == idProduct){
+            for (CartItem item: cart.getCartItems()){
+                if (item.getProduct().getProductId() == idProduct){
                     item.setQuantity(item.getQuantity() + quantity);
+                    cartItemRepository.save(item);
                     respon.setData(item);
                     respon.setMassage("them thanh cong");
                     return respon;
@@ -83,17 +78,17 @@ public class CartServices implements ICartServices {
 
     @Override
     public List<CartTemp> updateCartItem(int idCartItem, Integer quantity) {
-        Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
+        Optional<CartItem> optional= cartItemRepository.findById(idCartItem);
         if (optional.isPresent()){
+            cartTemps.clear();
             CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
             if (quantity == 0){
                 cartItemRepository.delete(cartItem);
-                cartTemps.clear();
                 getAll(cartItem.getCart().getCartId());
             }
             else {
                 cartItem.setQuantity(quantity);
-                cartTemps.clear();
+                cartItemRepository.save(cartItem);
                 getAll(cartItem.getCart().getCartId());
             }
         }
@@ -107,8 +102,8 @@ public class CartServices implements ICartServices {
             System.out.println(1);
             CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
             cartItemRepository.delete(cartItem);
-//            cartTemps.clear();
-//            getAll(cartItem.getCart().getCartId());
+            cartTemps.clear();
+            getAll(cartItem.getCart().getCartId());
         }
         return cartTemps;
     }
