@@ -105,6 +105,10 @@ public class CartServices implements ICartServices {
         Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
         if (optional.isPresent()){
             System.out.println(1);
+            CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
+            cartItemRepository.delete(cartItem);
+//            cartTemps.clear();
+//            getAll(cartItem.getCart().getCartId());
         }
         return cartTemps;
     }
