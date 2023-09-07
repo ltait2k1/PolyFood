@@ -15,4 +15,5 @@ public interface IProductServices {
     public Respon<Product> delete(int idProduct);
     public ResponseEntity<Page<Product>> seachProduct(String name, int pageNumber, int pageSize);
     public Page<Product> seachByPrice(int value1, int value2, int pageNumber, int pageSize);
+    public Product viewProduct(int idProduct);
 }

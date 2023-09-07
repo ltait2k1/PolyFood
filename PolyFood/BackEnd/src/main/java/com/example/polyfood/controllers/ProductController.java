@@ -61,4 +61,9 @@ public class ProductController {
     {
         return productServices.seachByPrice(value1,value2,pageNumber,pageSize);
     }
+
+    @GetMapping(value = "product/viewProduct/{idProduct}")
+    public Product viewProduct(@PathVariable int idProduct){
+        return productServices.viewProduct(idProduct);
+    }
 }

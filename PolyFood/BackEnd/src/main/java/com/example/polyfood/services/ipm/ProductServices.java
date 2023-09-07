@@ -122,6 +122,16 @@ public class ProductServices implements IProductServices {
     }
 
     @Override
+    public Product viewProduct(int idProduct) {
+        Optional<Product> optional = productRepository.findById(idProduct);
+        if (optional.isPresent()){
+            Product product = productRepository.getReferenceById(idProduct);
+            return product;
+        }
+        return null;
+    }
+
+    @Override
     public List<Product> getAllProduct(int pageNumber, int pageSize, String field, Boolean sortType) {
         Pageable pageable;
         HttpHeaders headers = new HttpHeaders();
