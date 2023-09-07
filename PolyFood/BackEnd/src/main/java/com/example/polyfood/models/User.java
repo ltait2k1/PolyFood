@@ -1,14 +1,18 @@
 package com.example.polyfood.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",   uniqueConstraints = {
+        @UniqueConstraint(columnNames = "user_name"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,10 +64,11 @@ public class User {
     @JsonManagedReference
     private Set<Cart> carts;
 
-    @ManyToOne
-    @JoinColumn(name = "decentralization_id",nullable = false, referencedColumnName = "decentralization_id")
-    @JsonBackReference
-    private Decentralization decentralization;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public Set<Cart> getCarts() {
         return carts;
@@ -87,6 +92,14 @@ public class User {
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setAvatar(String avatar) {
@@ -125,12 +138,13 @@ public class User {
         this.resetPasswordTokenExpiry = resetPasswordTokenExpiry;
     }
 
-    public Decentralization getDecentralization() {
-        return decentralization;
+    public User() {
     }
 
-    public void setDecentralization(Decentralization decentralization) {
-        this.decentralization = decentralization;
+    public User(String username, String email, String password) {
+        this.userName = username;
+        this.email = email;
+        this.password = password;
     }
 
     public void setUserName(String userName) {
