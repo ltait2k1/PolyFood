@@ -35,7 +35,6 @@ public class CartServices implements ICartServices {
         if (quantity == null){
             for (CartItem item: cart.getCartItems()){
                 if (item.getProduct().getProductId() == idProduct){
-                    System.out.println(1);
                     item.setQuantity(item.getQuantity() + 1);
                     cartItemRepository.save(item);
                     respon.setData(item);
