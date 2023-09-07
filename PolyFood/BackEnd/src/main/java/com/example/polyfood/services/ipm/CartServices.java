@@ -104,10 +104,7 @@ public class CartServices implements ICartServices {
     public List<CartTemp> deleteCartItem(int idCartItem) {
         Optional<CartItem> optional = cartItemRepository.findById(idCartItem);
         if (optional.isPresent()){
-            CartItem cartItem = cartItemRepository.getReferenceById(idCartItem);
-            cartItemRepository.delete(cartItem);
-            cartTemps.clear();
-            getAll(cartItem.getCart().getCartId());
+            System.out.println(1);
         }
         return cartTemps;
     }
@@ -128,6 +125,7 @@ public class CartServices implements ICartServices {
 
     @Override
     public List<CartTemp> getAll(int idCart) {
+        cartTemps.clear();
         for (CartItem item: cartItemRepository.findAll()){
             if (item.getCart().getCartId() == idCart){
                 CartTemp cartTemp = new CartTemp();
@@ -152,12 +150,12 @@ public class CartServices implements ICartServices {
         List<CartItem> cartItemList = new ArrayList<>();
         for (CartItem item: cartItemRepository.findAll()){
             if (item.getCart().getCartId() == idCart){
-                CartItem cartItem = new CartItem();
-                cartItem.setCartItemId(item.getCartItemId());
-                cartItem.setQuantity(item.getQuantity());
-                cartItem.setProduct(item.getProduct());
-                cartItem.setCart(item.getCart());
-                cartItemList.add(cartItem);
+//                CartItem cartItem = new CartItem();
+//                cartItem.setCartItemId(item.getCartItemId());
+//                cartItem.setQuantity(item.getQuantity());
+//                cartItem.setProduct(item.getProduct());
+//                cartItem.setCart(item.getCart());
+                cartItemList.add(item);
             }
         }
         return cartItemList;
